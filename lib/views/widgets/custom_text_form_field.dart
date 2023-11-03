@@ -6,13 +6,16 @@ class CustomTextFormField extends StatelessWidget {
   final TextEditingController textEditingController;
   final TextInputType textInputType;
   final bool isObscured;
-  const CustomTextFormField(
-      {super.key,
-      required this.hint,
-      required this.icon,
-      required this.textEditingController,
-      required this.textInputType,
-      required this.isObscured});
+  final String? isValide;
+  const CustomTextFormField({
+    super.key,
+    required this.hint,
+    required this.icon,
+    required this.textEditingController,
+    required this.textInputType,
+    required this.isObscured,
+    required this.isValide,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -20,6 +23,7 @@ class CustomTextFormField extends StatelessWidget {
       controller: textEditingController,
       keyboardType: textInputType,
       obscureText: isObscured,
+      validator: (value) => isValide,
       decoration: InputDecoration(
         enabled: true,
         hintText: hint,
@@ -53,6 +57,23 @@ class CustomTextFormField extends StatelessWidget {
           ),
           borderRadius: BorderRadius.circular(10.0),
         ),
+        errorBorder: OutlineInputBorder(
+          borderSide: const BorderSide(
+            color: Colors.red,
+            style: BorderStyle.solid,
+            width: 1.0,
+          ),
+          borderRadius: BorderRadius.circular(10.0),
+        ),
+        focusedErrorBorder: OutlineInputBorder(
+          borderSide: const BorderSide(
+            color: Colors.red,
+            style: BorderStyle.solid,
+            width: 1.0,
+          ),
+          borderRadius: BorderRadius.circular(10.0),
+        ),
+        errorStyle: const TextStyle(color: Colors.red),
       ),
     );
   }

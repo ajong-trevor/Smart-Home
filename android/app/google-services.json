@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "164558738217",
+    "project_id": "caban-e5f93",
+    "storage_bucket": "caban-e5f93.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:164558738217:android:8896040a8eef40626e1d38",
+        "android_client_info": {
+          "package_name": "com.example.caban"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDLOsmlX2oWTaUkyM34zKXyWODc_dmXO5c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
