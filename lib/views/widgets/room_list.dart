@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'room.dart';
+import '../../services/room_services.dart';
 
 class RoomList extends StatelessWidget {
   const RoomList({super.key});
@@ -23,9 +24,14 @@ class RoomList extends StatelessWidget {
           crossAxisSpacing: 20.0,
           mainAxisSpacing: 20.0,
         ),
-        itemCount: 6,
+        itemCount: rooms.length,
         itemBuilder: (context, index) {
-          return const Room();
+          return Room(
+            roomId: rooms[index].id,
+            title: rooms[index].title,
+            icons: rooms[index].icon,
+            deviceIds: rooms[index].deviceIds,
+          );
         },
       ),
     );

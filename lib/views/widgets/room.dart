@@ -2,13 +2,31 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class Room extends StatelessWidget {
-  const Room({super.key});
+  final String title;
+  final IconData icons;
+  final List<String> deviceIds;
+  final String roomId;
+
+  const Room({
+    required this.icons,
+    required this.deviceIds,
+    required this.title,
+    required this.roomId,
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
+    final data = {
+      'title': title,
+      'icons': icons,
+      'deviceIds': deviceIds,
+      'roomId': roomId,
+    };
+
     return GestureDetector(
       onTap: () {
-        Get.toNamed('/room');
+        Get.toNamed('/room', arguments: data);
       },
       child: Container(
         decoration: BoxDecoration(
@@ -19,14 +37,14 @@ class Room extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Icon(
-              Icons.chair_rounded,
+              icons,
               color: Theme.of(context).colorScheme.background,
               size: 58.0,
             ),
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 10.0),
               child: Text(
-                'Living Room',
+                title,
                 style: TextStyle(
                   color: Theme.of(context).colorScheme.background,
                   fontSize: 20.0,
@@ -37,7 +55,7 @@ class Room extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(bottom: 10.0),
               child: Text(
-                '8 Devices',
+                '${deviceIds.length} Devices',
                 style: TextStyle(
                   color: Theme.of(context)
                       .colorScheme

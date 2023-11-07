@@ -122,7 +122,7 @@ class HomeView extends StatelessWidget {
                 ),
               ],
             ),
-            const RoomList(),
+            RoomList(),
           ],
         ),
       ),

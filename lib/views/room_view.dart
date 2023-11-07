@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import 'widgets/devices_list.dart';
+import '../services/devices_services.dart';
+import '../models/devices_model.dart';
+import 'widgets/room_lamp.dart';
 
 class RoomView extends StatefulWidget {
   const RoomView({super.key});
@@ -10,10 +14,21 @@ class RoomView extends StatefulWidget {
 }
 
 class _RoomViewState extends State<RoomView> {
-  bool isSwitched = false;
+  var data = Get.arguments;
+  List<DevicesModel> roomDevices = [];
 
   @override
   Widget build(BuildContext context) {
+    final List<String> roomDeviceIds = data['deviceIds'];
+
+    for (var roomDeviceId in roomDeviceIds) {
+      List<DevicesModel> selectedRoomDevices = devices.where((device) {
+        return roomDeviceId == device.id;
+      }).toList();
+
+      roomDevices.add(selectedRoomDevices.first);
+    }
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.primary,
@@ -24,7 +39,7 @@ class _RoomViewState extends State<RoomView> {
           Padding(
             padding: const EdgeInsets.only(right: 20.0),
             child: Text(
-              'Living Room',
+              data['title'],
               style: TextStyle(
                 fontSize: 20.0,
                 color: Theme.of(context).colorScheme.background,
@@ -38,84 +53,8 @@ class _RoomViewState extends State<RoomView> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SizedBox(
-                  width: MediaQuery.of(context).size.width * 0.6,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Padding(
-                        padding: EdgeInsets.symmetric(
-                            vertical: 30.0, horizontal: 20.0),
-                        child: Text(
-                          'Living Room Lights',
-                          style: TextStyle(
-                              fontSize: 30.0, fontWeight: FontWeight.bold),
-                          overflow: TextOverflow.clip,
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 30.0),
-                        child: Transform.scale(
-                          scale: 1.5,
-                          child: Switch(
-                            activeColor:
-                                Theme.of(context).colorScheme.background,
-                            activeTrackColor:
-                                Theme.of(context).colorScheme.primary,
-                            inactiveTrackColor: Colors.transparent,
-                            materialTapTargetSize: MaterialTapTargetSize.padded,
-                            value: isSwitched,
-                            onChanged: (value) {
-                              setState(() {
-                                isSwitched = value;
-                              });
-                            },
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                Stack(
-                  alignment: const Alignment(0, 0),
-                  children: [
-                    Container(
-                      width: MediaQuery.of(context).size.width * 0.4,
-                      height: MediaQuery.of(context).size.height * 0.35,
-                      decoration: const BoxDecoration(
-                        // color: Colors.red,
-                        image: DecorationImage(
-                          image: AssetImage('assets/images/Table-Lamp.png'),
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                    ),
-                    if (isSwitched)
-                      Positioned(
-                        bottom: 11.5,
-                        left: 27,
-                        child: Container(
-                          width: 120,
-                          height: 110,
-                          decoration: const BoxDecoration(
-                            gradient: LinearGradient(
-                              begin: Alignment.topCenter,
-                              end: Alignment.bottomCenter,
-                              colors: [
-                                Colors.orangeAccent,
-                                Colors.transparent,
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                  ],
-                )
-              ],
+            RoomLamp(
+              title: data['title'],
             ),
             Container(
               width: double.infinity,
@@ -141,8 +80,11 @@ class _RoomViewState extends State<RoomView> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  Icon(Icons.chair_rounded,
-                      color: Theme.of(context).colorScheme.primary, size: 80.0),
+                  Icon(
+                    data['icons'],
+                    color: Theme.of(context).colorScheme.primary,
+                    size: 80.0,
+                  ),
                   Column(
                     children: [
                       Row(
@@ -189,11 +131,13 @@ class _RoomViewState extends State<RoomView> {
                         ],
                       ),
                     ],
-                  )
+                  ),
                 ],
               ),
             ),
-            const DevicesList(),
+            DevicesList(
+              roomDevices: roomDevices,
+            ),
           ],
         ),
       ),

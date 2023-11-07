@@ -1,7 +1,14 @@
 import 'package:flutter/material.dart';
 
 class Device extends StatefulWidget {
-  const Device({super.key});
+  final String name;
+  final bool status;
+
+  const Device({
+    required this.name,
+    required this.status,
+    super.key,
+  });
 
   @override
   State<Device> createState() => _DeviceState();
@@ -20,9 +27,9 @@ class _DeviceState extends State<Device> {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text(
-                'Television',
-                style: TextStyle(
+              Text(
+                widget.name,
+                style: const TextStyle(
                   fontSize: 20.0,
                   fontWeight: FontWeight.w900,
                 ),
